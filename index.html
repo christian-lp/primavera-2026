@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Primavera 2026 🌸</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="petalos"></div>
+
+  <!-- INICIO -->
+  <section id="inicio" class="pantalla activa">
+
+    <div class="contenido">
+
+      <div class="flores-titulo">
+        🌸 🌷 🌼
+      </div>
+
+      <h1>Primavera 2026</h1>
+
+      <h2>
+        Hay personas que hacen nuestros días más lindos.
+      </h2>
+
+      <p>
+        Esta primavera, mandale una flor a alguien especial 💐
+      </p>
+
+      <button class="boton principal" onclick="mostrarFormulario()">
+        🌸 Crear tarjeta
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- FORMULARIO -->
+  <section id="formularioPantalla" class="pantalla">
+
+    <div class="formulario">
+
+      <h2>🌷 Creá tu tarjeta</h2>
+
+      <label>
+        ¿Para quién es?
+      </label>
+
+      <input
+        type="text"
+        id="nombre"
+        placeholder="Ej: Sofi"
+        maxlength="30"
+      >
+
+
+      <label>
+        Escribile algo lindo 💌
+      </label>
+
+      <textarea
+        id="mensaje"
+        placeholder="Que esta primavera te encuentre rodeada de cosas lindas..."
+        maxlength="250"
+      ></textarea>
+
+
+      <label>
+        Tu nombre
+      </label>
+
+      <input
+        type="text"
+        id="remitente"
+        placeholder="Ej: Chris"
+        maxlength="30"
+      >
+
+
+      <div class="botones-formulario">
+
+        <button
+          class="boton secundario"
+          onclick="volverInicio()">
+          Volver
+        </button>
+
+        <button
+          class="boton principal"
+          onclick="crearTarjeta()">
+          🌸 Crear
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SOBRE -->
+  <section id="sobrePantalla" class="pantalla">
+
+    <h2 class="titulo-sobre">
+      Tenés una tarjeta de primavera 💐
+    </h2>
+
+    <div
+      id="sobre"
+      class="sobre"
+      onclick="abrirSobre()">
+
+      <div class="solapa"></div>
+
+      <div class="corazon">
+        ❤️
+      </div>
+
+    </div>
+
+    <p class="click-text">
+      Tocá el sobre para abrirlo
+    </p>
+
+  </section>
+
+
+  <!-- TARJETA -->
+  <section id="tarjetaPantalla" class="pantalla">
+
+    <div class="tarjeta">
+
+      <div class="flores-superiores">
+        🌸 🌼 🌷 🌸
+      </div>
+
+      <h2 id="tituloTarjeta"></h2>
+
+      <p id="mensajeTarjeta"></p>
+
+      <p class="firma" id="firmaTarjeta"></p>
+
+      <div class="flores-inferiores">
+        🌷 🌸 🌼
+      </div>
+
+      <button
+        class="boton principal"
+        onclick="compartirTarjeta()">
+        📲 Compartir
+      </button>
+
+      <button
+        class="boton secundario"
+        onclick="copiarLink()">
+        🔗 Copiar enlace
+      </button>
+
+      <button
+        class="boton secundario"
+        onclick="crearOtra()">
+        🌸 Crear otra
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <div id="notificacion">
+    Link copiado ❤️
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
