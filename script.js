@@ -177,7 +177,6 @@ function generarLink() {
             .replace(/\//g, "_")
             .replace(/=+$/, "");
 
-
     return (
         window.location.origin +
         "/?t=" +
@@ -186,7 +185,6 @@ function generarLink() {
         Date.now()
     );
 }
-
 
 async function guardarTarjeta() {
 
@@ -686,11 +684,12 @@ function revisarParametros() {
             window.location.search
         );
 
-
     const codigo =
         parametros.get("t");
 
 
+    // Si no viene una tarjeta compartida,
+    // mostramos la página normal.
     if (!codigo) {
         return;
     }
@@ -705,9 +704,11 @@ function revisarParametros() {
 
 
         while (
-            base64.length % 4
+            base64.length % 4 !== 0
         ) {
+
             base64 += "=";
+
         }
 
 
@@ -716,11 +717,21 @@ function revisarParametros() {
 
 
         const bytes =
-            Uint8Array.from(
-                binario,
-                caracter =>
-                    caracter.charCodeAt(0)
+            new Uint8Array(
+                binario.length
             );
+
+
+        for (
+            let i = 0;
+            i < binario.length;
+            i++
+        ) {
+
+            bytes[i] =
+                binario.charCodeAt(i);
+
+        }
 
 
         const json =
@@ -732,11 +743,23 @@ function revisarParametros() {
             JSON.parse(json);
 
 
+        console.log(
+            "Tarjeta recibida:",
+            datos
+        );
+
+
         if (
             !datos.n ||
             !datos.m
         ) {
+
+            console.error(
+                "La tarjeta no tiene datos válidos"
+            );
+
             return;
+
         }
 
 
@@ -751,11 +774,20 @@ function revisarParametros() {
             "Alguien especial";
 
 
-        document
-            .getElementById("inicio")
-            .classList
-            .remove("activa");
+        // Ocultar todas las pantallas primero
 
+        document
+            .querySelectorAll(".pantalla")
+            .forEach(pantalla => {
+
+                pantalla.classList.remove(
+                    "activa"
+                );
+
+            });
+
+
+        // Mostrar solamente el sobre
 
         document
             .getElementById(
@@ -764,15 +796,32 @@ function revisarParametros() {
             .classList
             .add("activa");
 
+
+        // Por si el sobre había quedado abierto
+
+        document
+            .getElementById("sobre")
+            .classList
+            .remove("abierto");
+
     }
 
     catch (error) {
 
         console.error(
-            "Tarjeta inválida",
+            "Error leyendo tarjeta:",
             error
         );
 
     }
 
 }
+
+
+revisarParametros();
+
+document
+    .querySelectorAll(".pantalla")
+    .forEach(pantalla => {
+        pantalla.classList.remove("activa");
+    });
