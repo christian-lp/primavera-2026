@@ -550,3 +550,199 @@ body {
   }
 
 }
+
+
+/* MENU COMPARTIR */
+
+.share-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(30, 10, 20, 0.55);
+
+    backdrop-filter: blur(6px);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 1000;
+
+    padding: 20px;
+}
+
+
+.share-box {
+
+    width: min(420px, 95%);
+
+    background: white;
+
+    border-radius: 25px;
+
+    padding: 30px;
+
+    position: relative;
+
+    box-shadow:
+        0 25px 80px
+        rgba(0,0,0,0.25);
+
+    animation:
+        aparecerShare
+        0.35s ease;
+}
+
+
+@keyframes aparecerShare {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(20px)
+            scale(0.95);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+
+.share-box h2 {
+
+    color: #c83b71;
+
+    margin-bottom: 8px;
+}
+
+
+.share-box > p {
+
+    margin-bottom: 20px;
+
+    opacity: 0.75;
+}
+
+
+.cerrar-share {
+
+    position: absolute;
+
+    right: 15px;
+
+    top: 15px;
+
+    border: none;
+
+    background: #f6e8ee;
+
+    width: 35px;
+
+    height: 35px;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+
+.share-opciones {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+}
+
+
+.share-btn {
+
+    border:
+        1px solid #f0c5d3;
+
+    background:
+        #fff8fa;
+
+    padding:
+        15px 10px;
+
+    border-radius:
+        14px;
+
+    cursor:
+        pointer;
+
+    font-size:
+        15px;
+
+    transition:
+        0.25s;
+}
+
+
+.share-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+        #fff0f5;
+}
+
+
+.share-btn.importante {
+
+    background:
+        #e75480;
+
+    color:
+        white;
+
+    border:
+        none;
+}
+
+
+.nota-share {
+
+    margin-top:
+        20px;
+
+    font-size:
+        13px;
+
+    opacity:
+        0.65;
+
+    line-height:
+        1.5;
+}
+
+
+@media(max-width: 450px) {
+
+    .share-opciones {
+
+        grid-template-columns:
+            1fr;
+    }
+
+}

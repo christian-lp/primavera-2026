@@ -215,14 +215,273 @@ async function copiarLink() {
 
 /* COMPARTIR */
 
-async function compartirTarjeta() {
+function compartirTarjeta() {
+
+    mostrarMenuCompartir();
+}
+
+
+function mostrarMenuCompartir() {
+
+    let menu =
+        document.getElementById("menuCompartir");
+
+
+    if (!menu) {
+
+        menu =
+            document.createElement("div");
+
+
+        menu.id =
+            "menuCompartir";
+
+
+        menu.innerHTML = `
+
+            <div class="share-overlay">
+
+                <div class="share-box">
+
+                    <button
+                        class="cerrar-share"
+                        onclick="cerrarMenuCompartir()">
+                        ✕
+                    </button>
+
+
+                    <h2>
+                        Compartir tarjeta 🌸
+                    </h2>
+
+
+                    <p>
+                        Elegí cómo querés enviarla
+                    </p>
+
+
+                    <div class="share-opciones">
+
+
+                        <button
+                            onclick="compartirWhatsApp()"
+                            class="share-btn">
+
+                            🟢 WhatsApp
+
+                        </button>
+
+
+                        <button
+                            onclick="compartirTelegram()"
+                            class="share-btn">
+
+                            🔵 Telegram
+
+                        </button>
+
+
+                        <button
+                            onclick="compartirFacebook()"
+                            class="share-btn">
+
+                            🔷 Facebook
+
+                        </button>
+
+
+                        <button
+                            onclick="compartirX()"
+                            class="share-btn">
+
+                            ⚫ X
+
+                        </button>
+
+
+                        <button
+                            onclick="compartirNativo()"
+                            class="share-btn importante">
+
+                            📲 Más opciones
+
+                        </button>
+
+
+                        <button
+                            onclick="copiarLink()"
+                            class="share-btn">
+
+                            🔗 Copiar enlace
+
+                        </button>
+
+
+                    </div>
+
+
+                    <p class="nota-share">
+
+                        En celular, "Más opciones"
+                        puede mostrar Instagram,
+                        WhatsApp, Messenger y otras apps.
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        document.body
+            .appendChild(menu);
+    }
+
+
+    menu.style.display =
+        "block";
+}
+
+
+
+function cerrarMenuCompartir() {
+
+    const menu =
+        document.getElementById(
+            "menuCompartir"
+        );
+
+
+    if (menu) {
+
+        menu.style.display =
+            "none";
+    }
+
+}
+
+
+
+function compartirWhatsApp() {
 
     const link =
         generarLink();
 
 
     const texto =
-        "🌸 Te mandaron una tarjeta de Primavera 💐";
+
+        "🌹 Te enviaron una rosa por el Día de la Primavera 💐\n\n" +
+
+        link;
+
+
+    const url =
+
+        "https://wa.me/?text=" +
+
+        encodeURIComponent(texto);
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+}
+
+
+
+function compartirTelegram() {
+
+    const link =
+        generarLink();
+
+
+    const texto =
+        "🌹 Te enviaron una rosa 💐";
+
+
+    const url =
+
+        "https://t.me/share/url?url=" +
+
+        encodeURIComponent(link) +
+
+        "&text=" +
+
+        encodeURIComponent(texto);
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+}
+
+
+
+function compartirFacebook() {
+
+    const link =
+        generarLink();
+
+
+    const url =
+
+        "https://www.facebook.com/sharer/sharer.php?u=" +
+
+        encodeURIComponent(link);
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+}
+
+
+
+function compartirX() {
+
+    const link =
+        generarLink();
+
+
+    const texto =
+
+        "🌹 Te enviaron una rosa por el Día de la Primavera 💐";
+
+
+    const url =
+
+        "https://twitter.com/intent/tweet?text=" +
+
+        encodeURIComponent(texto) +
+
+        "&url=" +
+
+        encodeURIComponent(link);
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+}
+
+
+
+async function compartirNativo() {
+
+    const link =
+        generarLink();
+
+
+    const texto =
+
+        "🌹 Te enviaron una rosa por el Día de la Primavera 💐";
 
 
     if (navigator.share) {
@@ -232,33 +491,37 @@ async function compartirTarjeta() {
             await navigator.share({
 
                 title:
-                    "Tarjeta de Primavera 🌸",
+                    "Te enviaron una rosa 🌹",
 
-                text: texto,
+                text:
+                    texto,
 
-                url: link
+                url:
+                    link
 
             });
 
         }
 
-        catch {
+        catch (error) {
 
             console.log(
-                "Se canceló el compartir"
+                "Compartir cancelado"
             );
+
         }
 
     }
 
     else {
 
-        await copiarLink();
+        mostrarNotificacion(
+            "Tu navegador no permite compartir directamente"
+        );
 
     }
 
 }
-
 
 /* CREAR OTRA */
 
