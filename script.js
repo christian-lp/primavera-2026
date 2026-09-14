@@ -147,38 +147,70 @@ function mostrarTarjeta() {
 
 /* GENERAR LINK */
 
+/* GENERAR LINK */
+
 function generarLink() {
 
-    const url =
-        new URL(
-            window.location.href
-        );
+    const datos = {
+        n: nombreActual,
+        m: mensajeActual,
+        d: remitenteActual
+    };
+
+    const json =
+        JSON.stringify(datos);
+
+    const bytes =
+        new TextEncoder()
+            .encode(json);
+
+    let binario = "";
+
+    bytes.forEach(byte => {
+        binario +=
+            String.fromCharCode(byte);
+    });
+
+    const codigo =
+        btoa(binario)
+            .replace(/\+/g, "-")
+            .replace(/\//g, "_")
+            .replace(/=+$/, "");
 
 
-    url.search = "";
-
-
-    url.searchParams.set(
-        "nombre",
-        nombreActual
+    return (
+        window.location.origin +
+        "/?t=" +
+        codigo
     );
-
-
-    url.searchParams.set(
-        "mensaje",
-        mensajeActual
-    );
-
-
-    url.searchParams.set(
-        "de",
-        remitenteActual
-    );
-
-
-    return url.toString();
 }
 
+
+async function guardarTarjeta() {
+
+    const respuesta = await fetch(
+        "/api/crear",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type":
+                    "application/json"
+            },
+
+            body: JSON.stringify({
+                nombre: nombreActual,
+                mensaje: mensajeActual,
+                de: remitenteActual
+            })
+        }
+    );
+
+    const datos =
+        await respuesta.json();
+
+    return datos.id;
+}
 
 /* COPIAR */
 
@@ -656,6 +688,8 @@ setInterval(
 
 /* LEER LINK COMPARTIDO */
 
+/* LEER LINK COMPARTIDO */
+
 function revisarParametros() {
 
     const parametros =
@@ -664,29 +698,67 @@ function revisarParametros() {
         );
 
 
-    const nombre =
-        parametros.get("nombre");
-
-    const mensaje =
-        parametros.get("mensaje");
-
-    const de =
-        parametros.get("de");
+    const codigo =
+        parametros.get("t");
 
 
-    if (
-        nombre &&
-        mensaje
-    ) {
+    if (!codigo) {
+        return;
+    }
+
+
+    try {
+
+        let base64 =
+            codigo
+                .replace(/-/g, "+")
+                .replace(/_/g, "/");
+
+
+        while (
+            base64.length % 4
+        ) {
+            base64 += "=";
+        }
+
+
+        const binario =
+            atob(base64);
+
+
+        const bytes =
+            Uint8Array.from(
+                binario,
+                caracter =>
+                    caracter.charCodeAt(0)
+            );
+
+
+        const json =
+            new TextDecoder()
+                .decode(bytes);
+
+
+        const datos =
+            JSON.parse(json);
+
+
+        if (
+            !datos.n ||
+            !datos.m
+        ) {
+            return;
+        }
+
 
         nombreActual =
-            nombre;
+            datos.n;
 
         mensajeActual =
-            mensaje;
+            datos.m;
 
         remitenteActual =
-            de ||
+            datos.d ||
             "Alguien especial";
 
 
@@ -705,7 +777,19 @@ function revisarParametros() {
 
     }
 
+    catch (error) {
+
+        console.error(
+            "Tarjeta inválida",
+            error
+        );
+
+    }
+
 }
+
+
+revisarParametros();
 
 
 revisarParametros();
