@@ -181,7 +181,9 @@ function generarLink() {
     return (
         window.location.origin +
         "/?t=" +
-        codigo
+        codigo +
+        "&v=" +
+        Date.now()
     );
 }
 
@@ -397,25 +399,14 @@ function cerrarMenuCompartir() {
 
 
 
-function compartirWhatsApp() {
+async function compartirWhatsApp() {
 
     const link =
         generarLink();
 
-
-    const texto =
-
-        "🌹 Te enviaron una rosa por el Día de la Primavera 💐\n\n" +
-
-        link;
-
-
     const url =
-
         "https://wa.me/?text=" +
-
-        encodeURIComponent(texto);
-
+        encodeURIComponent(link);
 
     window.open(
         url,
@@ -688,8 +679,6 @@ setInterval(
 
 /* LEER LINK COMPARTIDO */
 
-/* LEER LINK COMPARTIDO */
-
 function revisarParametros() {
 
     const parametros =
@@ -787,9 +776,3 @@ function revisarParametros() {
     }
 
 }
-
-
-revisarParametros();
-
-
-revisarParametros();
