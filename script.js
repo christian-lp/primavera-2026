@@ -186,31 +186,6 @@ function generarLink() {
     );
 }
 
-async function guardarTarjeta() {
-
-    const respuesta = await fetch(
-        "/api/crear",
-        {
-            method: "POST",
-
-            headers: {
-                "Content-Type":
-                    "application/json"
-            },
-
-            body: JSON.stringify({
-                nombre: nombreActual,
-                mensaje: mensajeActual,
-                de: remitenteActual
-            })
-        }
-    );
-
-    const datos =
-        await respuesta.json();
-
-    return datos.id;
-}
 
 /* COPIAR */
 
@@ -819,9 +794,3 @@ function revisarParametros() {
 
 
 revisarParametros();
-
-document
-    .querySelectorAll(".pantalla")
-    .forEach(pantalla => {
-        pantalla.classList.remove("activa");
-    });
