@@ -393,47 +393,48 @@ async function compartirInstagram() {
 
     const link = generarLink();
 
-    try {
+    const texto =
+        "🌹 Te enviaron una rosa por el Día de la Primavera 💐";
 
-        // Copiar link
-        await navigator.clipboard.writeText(link);
+    if (navigator.share) {
 
-        mostrarNotificacion(
-            "Link copiado 💜 Abrí un chat de Instagram y pegalo"
-        );
+        try {
 
-        // Esperamos un momento para que vea el mensaje
-        setTimeout(() => {
+            await navigator.share({
+                title: "Te enviaron una rosa 🌹",
+                text: texto,
+                url: link
+            });
 
-            // Intenta abrir la app de Instagram
-            window.location.href =
-                "instagram://app";
+        } catch (error) {
 
-            // Si no tiene la app o falla,
-            // abre Instagram web
-            setTimeout(() => {
+            console.log(
+                "Compartir cancelado",
+                error
+            );
 
-                window.open(
-                    "https://www.instagram.com/direct/inbox/",
-                    "_blank"
-                );
+        }
 
-            }, 1500);
+    } else {
 
-        }, 700);
+        try {
+
+            await navigator.clipboard.writeText(link);
+
+            mostrarNotificacion(
+                "Link copiado 💜"
+            );
+
+        } catch (error) {
+
+            prompt(
+                "Copiá este enlace:",
+                link
+            );
+
+        }
 
     }
-
-    catch (error) {
-
-        // Si no permite copiar automáticamente
-        prompt(
-            "Copiá este enlace y envialo por Instagram:",
-            link
-        );
-
-    }
-
 }
 
 function compartirTelegram() {
