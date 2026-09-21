@@ -391,62 +391,42 @@ async function compartirWhatsApp() {
 
 async function compartirInstagram() {
 
-    const link =
-        generarLink();
-
-
-    // CELULAR
-    // Abre el menú de compartir del sistema.
-    // Instagram puede aparecer si está instalado.
-
-    if (navigator.share) {
-
-        try {
-
-            await navigator.share({
-
-                title:
-                    "Te enviaron una rosa 🌹",
-
-                text:
-                    "🌹 Te enviaron una rosa por el Día de la Primavera 💐",
-
-                url:
-                    link
-
-            });
-
-        }
-
-        catch (error) {
-
-            console.log(
-                "Compartir cancelado"
-            );
-
-        }
-
-        return;
-    }
-
-
-    // PC / navegador sin compartir nativo
+    const link = generarLink();
 
     try {
 
-        await navigator
-            .clipboard
-            .writeText(link);
-
+        // Copiar link
+        await navigator.clipboard.writeText(link);
 
         mostrarNotificacion(
-            "Link copiado. Pegalo en Instagram 💜"
+            "Link copiado 💜 Abrí un chat de Instagram y pegalo"
         );
+
+        // Esperamos un momento para que vea el mensaje
+        setTimeout(() => {
+
+            // Intenta abrir la app de Instagram
+            window.location.href =
+                "instagram://app";
+
+            // Si no tiene la app o falla,
+            // abre Instagram web
+            setTimeout(() => {
+
+                window.open(
+                    "https://www.instagram.com/direct/inbox/",
+                    "_blank"
+                );
+
+            }, 1500);
+
+        }, 700);
 
     }
 
     catch (error) {
 
+        // Si no permite copiar automáticamente
         prompt(
             "Copiá este enlace y envialo por Instagram:",
             link
