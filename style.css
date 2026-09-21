@@ -780,3 +780,19 @@ body {
 .share-btn.facebook i {
     color: #1877F2;
 }
+
+.credito {
+    margin-top: 25px;
+    font-size: 13px;
+    opacity: 0.65;
+}
+
+.credito a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.credito a:hover {
+    text-decoration: underline;
+}
