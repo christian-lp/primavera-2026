@@ -269,39 +269,42 @@ function mostrarMenuCompartir() {
 
                     <div class="share-opciones">
 
-
                         <button
                             onclick="compartirWhatsApp()"
-                            class="share-btn">
+                            class="share-btn whatsapp">
 
-                            🟢 WhatsApp
+                            <i class="fa-brands fa-whatsapp"></i>
+                            WhatsApp
+
+                        </button>
+
+
+                        <button
+                            onclick="compartirInstagram()"
+                            class="share-btn instagram">
+
+                            <i class="fa-brands fa-instagram"></i>
+                            Instagram
 
                         </button>
 
 
                         <button
                             onclick="compartirTelegram()"
-                            class="share-btn">
+                            class="share-btn telegram">
 
-                            🔵 Telegram
+                            <i class="fa-brands fa-telegram"></i>
+                            Telegram
 
                         </button>
 
 
                         <button
                             onclick="compartirFacebook()"
-                            class="share-btn">
+                            class="share-btn facebook">
 
-                            🔷 Facebook
-
-                        </button>
-
-
-                        <button
-                            onclick="compartirX()"
-                            class="share-btn">
-
-                            ⚫ X
+                            <i class="fa-brands fa-facebook"></i>
+                            Facebook
 
                         </button>
 
@@ -322,7 +325,6 @@ function mostrarMenuCompartir() {
                             🔗 Copiar enlace
 
                         </button>
-
 
                     </div>
 
@@ -387,7 +389,72 @@ async function compartirWhatsApp() {
     );
 }
 
+async function compartirInstagram() {
 
+    const link =
+        generarLink();
+
+
+    // CELULAR
+    // Abre el menú de compartir del sistema.
+    // Instagram puede aparecer si está instalado.
+
+    if (navigator.share) {
+
+        try {
+
+            await navigator.share({
+
+                title:
+                    "Te enviaron una rosa 🌹",
+
+                text:
+                    "🌹 Te enviaron una rosa por el Día de la Primavera 💐",
+
+                url:
+                    link
+
+            });
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Compartir cancelado"
+            );
+
+        }
+
+        return;
+    }
+
+
+    // PC / navegador sin compartir nativo
+
+    try {
+
+        await navigator
+            .clipboard
+            .writeText(link);
+
+
+        mostrarNotificacion(
+            "Link copiado. Pegalo en Instagram 💜"
+        );
+
+    }
+
+    catch (error) {
+
+        prompt(
+            "Copiá este enlace y envialo por Instagram:",
+            link
+        );
+
+    }
+
+}
 
 function compartirTelegram() {
 
@@ -436,37 +503,6 @@ function compartirFacebook() {
         "_blank"
     );
 }
-
-
-
-function compartirX() {
-
-    const link =
-        generarLink();
-
-
-    const texto =
-
-        "🌹 Te enviaron una rosa por el Día de la Primavera 💐";
-
-
-    const url =
-
-        "https://twitter.com/intent/tweet?text=" +
-
-        encodeURIComponent(texto) +
-
-        "&url=" +
-
-        encodeURIComponent(link);
-
-
-    window.open(
-        url,
-        "_blank"
-    );
-}
-
 
 
 async function compartirNativo() {

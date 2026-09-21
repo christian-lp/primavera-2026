@@ -746,3 +746,37 @@ body {
     }
 
 }
+
+
+.share-btn i {
+    font-size: 22px;
+    width: 28px;
+    text-align: center;
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* WhatsApp */
+.share-btn.whatsapp i {
+    color: #25D366;
+}
+
+/* Instagram */
+.share-btn.instagram i {
+    color: #E4405F;
+}
+
+/* Telegram */
+.share-btn.telegram i {
+    color: #229ED9;
+}
+
+/* Facebook */
+.share-btn.facebook i {
+    color: #1877F2;
+}
